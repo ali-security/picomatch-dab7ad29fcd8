@@ -61,7 +61,7 @@ describe('options.maxExtglobRecursion', () => {
 
   it('should rewrite risky repeated extglobs embedded in larger patterns', () => {
     assert.strictEqual(
-      makeRe('foo/+(a|aa)/bar').source,
+      makeRe('foo/+(a|aa)/bar', { windows: false }).source,
       '^(?:foo\\/\\+\\(a\\|aa\\)\\/bar)$'
     );
     assert.strictEqual(
@@ -94,7 +94,7 @@ describe('options.maxExtglobRecursion', () => {
   });
 
   it('should preserve capture behavior for rewritten repeated extglobs', () => {
-    const embedded = makeRe('foo/+(a|aa)/bar', { capture: true });
+    const embedded = makeRe('foo/+(a|aa)/bar', { capture: true, windows: false });
     assert.strictEqual(embedded.source, '^(?:foo\\/\\+\\(a\\|aa\\)\\/bar)$');
     assert.deepStrictEqual(
       Array.from(embedded.exec('foo/+(a|aa)/bar')),
